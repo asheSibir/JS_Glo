@@ -31,7 +31,16 @@ const getCounter = function(){
     let counter = 0;
     return ++counter;
 };
-console.log(getCounter(10));
+let request = function(n){
+    const counter = getCounter();
+    const count = counter(); 
+    if (count < 5){
+        prompt('Ты как?');
+    } else {
+        alert('Отойди!');
+    }
+};
+
 
 const gameRandom = function(attempt){
     const randomNum = getRandom (1,100);
