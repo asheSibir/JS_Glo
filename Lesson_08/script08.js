@@ -119,20 +119,20 @@ for (let key in appData){
 }
 appData.getInfoDeposit();
 
-let elAddExpenses = appData.addExpenses[0];
+// можно удалить:
+console.log('Расходы за месяц: ' + appData.expensesMonth);
+console.log(appData.budgetMonth);
+console.log(appData.calcSavedMoney);
+console.log(appData.percentDeposit);
+console.log(appData.moneyDeposit);
+console.log(appData.addExpenses);
 
-let elements = elAddExpenses.split(', ');
+
+let elAddExpenses = appData.addExpenses.join(','); //преобразование массива в строку
+let elements = elAddExpenses.split(', '); // строку бьет на новый массив, каждый элемент отделен ", "
 
 for (let i of elements){
     let fLet = (i.substring(0,1)).toUpperCase();
     i = fLet + i.slice(1);
     console.log(i);
 }
-
-// // можно удалить:
-// console.log('Расходы за месяц: ' + appData.expensesMonth);
-// console.log(appData.budgetMonth);
-// console.log(appData.calcSavedMoney);
-// console.log(appData.percentDeposit);
-// console.log(appData.moneyDeposit);
-// console.log(appData.addExpenses);
