@@ -27,6 +27,27 @@ for (let day of week){
 }
 
 
+//ВАРИАНТ 2
+
+let week2 = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресеньe'];
+week2.forEach(function(day){
+    let now = new Date();
+    let todayNum = function(){
+        if (now.getDay() === 0) {
+            return 6;
+        } else {
+            return now.getDay() - 1;
+        }
+    };
+    if(day === week2[todayNum()]){
+        console.log(week2[todayNum].bold());
+        }
+    if (day === 'суббота' || day === 'воскресеньe'){
+        console.log(day.italics());
+    }         
+    console.log(week2[todayNum()]);
+});
+
 
 
 
