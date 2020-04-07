@@ -137,29 +137,42 @@ for (let i of elements){
     console.log(i);
 }
 
-let incomeBlock = document.querySelector('income');
-let additionalBlock = document.querySelector('additional_income');
-
+let incomeBlock = document.querySelector('.income');
+let additionalBlock = document.querySelector('.additional_income');
+let result = document.querySelector('.result');
+let fixedExpenses = document.querySelector('.expenses');
+let addExpensesBlock = document.querySelector('.additional_expenses');
+let depositBlock = document.querySelector('.deposit-calc');
 
 let button = document.getElementById('start');
 
 let buttonPlus1 = document.getElementsByClassName('income_add');
-let buttonPlus2 = document.getElementsByClassName('.expenses_add');
+let buttonPlus2 = document.getElementsByClassName('expenses_add');
 let checkboxDeposit = document.querySelector('#deposit-check');
 let addIncomeInput = document.querySelectorAll('.additional_income-item');
-let result = document.querySelector('result');
-let resultBudgetMonth = result.querySelector('budget_month-value');
-let resultBudgetDay = result.querySelector('budget_day-value');
-let resultExpensesMonth = result.querySelector('expenses_month-value');
-let resultAddIncome = result.querySelector('additional_income-value');
-let resultAddExp = result.querySelector('additional_expenses-value');
-let resultIncomePeriod = result.querySelector('income_period-value');
-let resultTargetPeriod = result.querySelector('target_month-value');
+
+let resultBudgetMonth = result.querySelector('.budget_month-value');
+let resultBudgetDay = result.querySelector('.budget_day-value');
+let resultExpensesMonth = result.querySelector('.expenses_month-value');
+let resultAddIncome = result.querySelector('.additional_income-value');
+let resultAddExp = result.querySelector('.additional_expenses-value');
+let resultIncomePeriod = result.querySelector('.income_period-value');
+let resultTargetPeriod = result.querySelector('.target_month-value');
 
 let salaryAmount = document.querySelector('.salary-amount');
 let incomeNameInput = incomeBlock.querySelector('[placeholder="Наименование"]');
 let incomeSumInput = incomeBlock.querySelector('[placeholder="Сумма"]');
-let addNameInput = additionalBlock.getElementsByTagName('placeholder')[0];
+let addNameInputPr = additionalBlock.getElementsByTagName('[placeholder="Наименование"]')[0];
+let addNameInputSec = additionalBlock.getElementsByTagName('[placeholder="Наименование"]')[1];
+let outcomeNameInput = fixedExpenses.querySelector('[placeholder="Наименование"]');
+let outcomeSumInput = fixedExpenses.querySelector('[placeholder="Сумма"]');
+let addExpensesInput = addExpensesBlock.querySelector('[placeholder="название"]');
+let sumOfDeposit = depositBlock.querySelector('.deposit-amount');
+let percentOfDeposit = depositBlock.querySelector('.deposit-percent');
+let sumOfTarget = document.querySelector('.target-amount');
+let lineOfPeriod = document.querySelector('.range');
+let cancel = document.getElementById('cancel');
+
 
 
 
@@ -168,5 +181,5 @@ console.log(button);
 console.log(buttonPlus1);
 console.log(buttonPlus2);
 console.log(checkboxDeposit);
-console.log(addNameInput);
+
 
