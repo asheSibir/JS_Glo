@@ -1,4 +1,4 @@
-'use strict';
+git 
 const isNum = function(n){
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
