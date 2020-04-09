@@ -1,4 +1,14 @@
 'use strict';
+
+let input = document.querySelector('input');
+let inputValue = input.data();
+console.log(inputValue);
+
+
+
+
+
+
 let massive = [15,20,7,3,0,12,4];
 function getNumber(){
     let d = massive.length;
