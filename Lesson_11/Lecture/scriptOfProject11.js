@@ -102,7 +102,7 @@ let appData = {
         let cloneaddExpItems = additionalExpensesItems[0].cloneNode(true);
         additionalExpensesItems[0].parentNode.insertBefore(cloneaddExpItems, incomePlus);
         additionalExpensesItems = document.querySelectorAll('.additional_income');
-        if (additional_income.length === 3){
+        if (additionalIncome.length === 3){
             incomePlus.style.display = 'none';
         }
 
