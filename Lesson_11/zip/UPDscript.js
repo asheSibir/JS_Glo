@@ -57,10 +57,7 @@ let appData = {
     percentDeposit: 0,
     moneyDeposit: 0,
     start: function(){
-        // if (salaryAmount.value === ''){
-        //     alert('Ошибка, поле "Месячный доход" должно быть заполнено!');
-        //     return;
-        // }
+        
         appData.budget = +salaryAmount.value; //месячный доход
         appData.getExpenses(); //расчет расходов        
         appData.getIncome();// расчет доходов
