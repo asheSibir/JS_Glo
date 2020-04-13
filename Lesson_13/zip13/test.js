@@ -3,7 +3,7 @@
 const todoControl = document.querySelector(".todo-control"),
     headerInput = document.querySelector(".header-input"),
     todoList = document.querySelector(".todo-list"),
-    ulTodoCompleted = document.querySelector(".todo-completed");
+    ulTodoCompleted = document.getElementById('completed');
 
 
 const todoData = [];
@@ -17,7 +17,7 @@ const render = function(){
         const li = document.createElement('li'); 
         li.classList.add('todo-item'); 
         
-        li.innerHTML = '<span class="text-todo">' + item.value + '</span>' + 
+        li.innerHTML = '<span class="text-todo">' + localStorage.keyText + '</span>' + 
         '<div class="todo-buttons">' + 
             '<button class="todo-remove"></button>' + 
             '<button class="todo-complete"></button>' + 
@@ -35,17 +35,18 @@ const render = function(){
             item.completed = !item.completed;
             render();
         });
+
+        const btnTodoRemove = li.querySelector('.todo-remove');
+        btnTodoRemove.addEventListener('click', function(){
+            li.remove();
+        });
         
-        const collectedLi = document.querySelector('ul').children;
-        for (let i=0, child; child <= elementChildrens[i]; i++) {
-            alert(child.innerHTML);
-       }
-        
+                
         
         
     });
 };
-
+let account = 0;
 todoControl.addEventListener('submit', function(event){ 
     event.preventDefault();
     if (headerInput.value !== ''){
@@ -53,7 +54,10 @@ todoControl.addEventListener('submit', function(event){
             value: headerInput.value,
             completed: false
         };
+                
         todoData.push(newTodo);
+        localStorage.keyText = todoData[account].value;
+        account++;
         render();
         headerInput.value = '';
     }
