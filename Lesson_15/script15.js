@@ -1,93 +1,59 @@
 'use strict';
-//ПРОТОТИПЫ, КОНСТРУКТОРЫ
-
-// function Car(){ //Базовое написание конструктора, С БОЛЬШОЙ БУКВЫ
-//     this.model = 'Mazda'
-// }
-
-//Конструктор с меняемыми свойствами:
-function Auto(countryOrigin, options){
-    this.countryOrigin = countryOrigin;
-    options = options || {};
-    this.color = options.color;
-    this.transmission = options.transmission;
-}
-Auto.prototype.ride = function(){
-    console.log(this.brand + ' ' +this.model + ' ' + 'поехала!');
+//Шаблонные строки, обратные кавычки
+//Интерполяция ${const}
+//СТРЕЛОЧНЫЕ ФУНКЦИИ
+const Human = function (firstname, surname, age){
+    this.firstname = firstname;
+    this.surname = surname;
+    this.age = age;
 };
-
-function Audi(countryOrigin, options, model, type){
-    Auto.apply(this, arguments); //Привязываем этот класс к Auto 
-    this.brand = 'Audi';
-    this.model = model;
-    this.type = type;
+Human.prototype.presentation = () => {
+    return ' - слабая функция';
 }
-Audi.prototype = Object.create(Auto.prototype); //Еще одна привязка, чтобы объекты на основе Audi
-//не только свойства Auto получали через Audi, но и считали Auto прототипом
-
-Audi.prototype.constructor = Audi; //Втянули Audi внутрь его класса Auto
-
-let carQ7 = new Audi('Germany', {color: 'red'}, 'Q7', 'S');
-console.log(carQ7);
-
-console.log(carQ7 instanceof Audi);
-console.log(carQ7 instanceof Auto);
-
-carQ7.ride();
+const newHuman = new Human('Вася', 'Иванов', '35');
+console.log(newHuman);
+console.log(newHuman.firstname + newHuman.presentation());
 
 
-function Car(brand, model, options){
-    this.brand = brand;
-    this.model = model;
-    options = options || {};
-    this.color = options.color;
-    this.transmission = options.transmission;
-}
-let car = new Car('Mazda', '3', {color: 'red'});
-let car2 = new Car('Toyota', 'Camry', {'ABS': true});
-//console.log(car, car2); 
 
-Car.prototype.ride = function(){
-    console.log(this.brand + this.model + 'поехала!');
+const travel = (person, origin, destination, time = '00:00') => {
+        console.log(`${person} отправляется из ${origin} в ${destination}, время отправления - ${time}`);
 };
+travel('Алина', 'Юрово', 'Москва');
+//СОКРАЩЕННАЯ ЗАПИСЬ ДЛЯ ПРОСТЫХ ФУНКЦИЙ
+const travelback = (person, origin, destination, time = '00:00') =>(`${person} возвращается из ${destination} в ${origin}, время отправления - ${time}`); 
+travel('Алина', 'Москва', 'домой');
 
-//car.ride();
-//console.log(Car.prototype.isPrototypeOf(car));
-//console.log(car2 instanceof Car);
+//addEventListener и стрелочные функции
+const btn = document.querySelector('button');
+btn.addEventListener('click', (e) => {
+    console.log(`Нажата кнопка! Причина - ${e.target}`);
+});
 
+const btns = document.querySelectorAll('button');
+btns.forEach((e) => {
+    console.log(e);
+});
 
-
-
-
-let anotherCar = {
-    model: 'Mazda',
+const createHome = function (wall, doors, windows = 1) {
+    console.log(`Стены дома выполнены из ${wall}, количество дверей - ${doors}, количество окон - ${windows}`);
 };
-console.log(anotherCar);
-console.dir(Car);
-
-Car.prototype.ride = function (){ //добавление в конструктор Car нового метода
-    console.log('ехать');
-}
+// windows = 1 - значение по умолчанию. Такие ставят в конце всех параметров, слева - обязательные
+createHome('пеноблоки', '2', '23');
 
 
-// // let arr = [1, 3, 5, 15];
-// // console.log(arr);
-// // console.log(arr.__proto__);
-// // console.log(Array.prototype);
+//Шаблонные строки, обратные кавычки
+const str = 'Двойные \nкавычки\n';
+const patternStr = `Обратные 
+кавычки - 2`;
+//console.log(str, patternStr);
 
-// let car = {
-//     doors: 4,
-//     turbocharging: false,
-//     ride: function(){
-//         console.log('Машина едет');
-//     }
-// };
+//Интерполяция ${const}
+const herName = 'Olga';
+const age = 28;
+const text = `<h1>${patternStr}</h1>
+            <div>${herName}</div>
+            <div>${age + 35}</div>`;
+//console.log(text);
 
-// let newCar = Object.create(car); //создание объекта с прототипом
-// newCar.model = 'mazda3';
-// console.log(newCar);
 
-// console.log(newCar.hasOwnProperty('model')); //проверяет наличие свойства у самого объекта
-// console.log(newCar.__proto__.hasOwnProperty('model'));//проверяет наличие свойства у прототипа
-
-// console.log(car.isPrototypeOf(newCar)); //проверяет, является ли объект прототитом (объекта)
