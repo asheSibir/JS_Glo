@@ -13,7 +13,7 @@ const div1 = document.getElementById('task1'),
 div1.innerHTML = div1.textContent.replace(/функц.+?[^.,\/#!$%\^&\*;:{}=\-_`~()]/gi, (match) => `<strong>${func}</strong>`);
 console.log(div1.innerHTML.match(/функци./g));
 
-div2.innerText = div2.textContent.replace(/\d+\:\d+/g, (match) => '<b>'+`${match}`+'</b>');
+div2.innerText = div2.textContent.replace(/\d+\:\d+/g, (match) => `<b>${match}</b>`);
 
 const quotation = () =>{
     div1.innerHTML = div1.textContent.replace(/\«.+?\»/g, (match) => `<mark>${match}</mark>`);
