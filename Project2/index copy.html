@@ -424,6 +424,23 @@
 <!-- <script src="./scripts/scriptModified.js"></script> // это домашка к 18 -->
 <script src="./HOMEWORKS/For_23/script23.js"></script>
 
+<script src="C:/Users/usernmae/Desktop/HTML/Course/plugins/validator/validator.js"></script>
+    <script>
+        const valid = new Validator ({
+            selector: ['#form1', '#form2', '#form3'],
+            pattern: {
+                user_text: /[а-я\s\.\,\;\:!?&]/ig, 
+            }, 
+            method: {
+                'user_text': [
+                    ['notEmpty'],
+                    ['pattern', 'user_text']
+                ],
+            }
+        })
+        valid.init();
+    </script>
+
 
 </body>
 </html>
