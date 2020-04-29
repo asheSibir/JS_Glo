@@ -424,6 +424,54 @@
 <!-- <script src="./scripts/scriptModified.js"></script> // это домашка к 18 -->
 <script src="./HOMEWORKS/For_23/script23.js"></script>
 
+<script src="C:/Users/usernmae/Desktop/HTML/Course/plugins/validator/validator.js"></script>
+    <script>
+        const valid = new Validator ({
+            selector:'#form1', //ID формы (или селектор, но именно формы)
+            pattern: {
+                name: /[а-я\s]/ig, //шаблон
+            }, 
+            method: {
+                'form1-name': [ //ID проверяемого поля
+                    ['notEmpty'], //метод проверки на непустотность
+                    ['pattern', 'name'] //привязка к шаблону
+                ],
+			},
+        })
+		valid.init();
+		const valid2 = new Validator ({
+			selector:'#form2', //ID формы (или селектор, но именно формы)
+            pattern: {
+				name: /[а-я\s]/ig, //шаблон
+				message: /[а-я]/ig
+            }, 
+            method: {
+                'form2-name': [ //ID проверяемого поля
+                    ['notEmpty'], //метод проверки на непустотность
+                    ['pattern', 'name'] //привязка к шаблону
+				],
+				'form2-message': [ //ID проверяемого поля
+                    ['notEmpty'], //метод проверки на непустотность
+                    ['pattern', 'message'] //привязка к шаблону
+                ],
+			}
+        })
+		valid2.init();
+		const valid3 = new Validator ({
+			selector:'#form3', //ID формы (или селектор, но именно формы)
+            pattern: {
+                name: /[а-я\s]/ig, //шаблон
+            }, 
+            method: {
+                'form3-name': [ //ID проверяемого поля
+                    ['notEmpty'], //метод проверки на непустотность
+                    ['pattern', 'name'] //привязка к шаблону
+                ],
+            }
+        })
+		valid3.init();
+    </script>
+
 
 </body>
 </html>

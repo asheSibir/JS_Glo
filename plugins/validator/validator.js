@@ -8,14 +8,13 @@ class Validator {
             return item.tagName.toLowerCase() !== 'button' &&
             item.type !== 'button';
         });
-        console.log(this.elementsForm);
         this.error = new Set();
     }
     init(){ // запуск всей проверки
         this.applyStyle(); // добавляем стиль, в зависимости от true или false
         this.setPattern(); // подключаем шаблоны к процессу
         this.elementsForm.forEach(elem => {
-            elem.addEventListener('change', this.checkIt.bind(this)); // вешаеш на изменение проверку
+            elem.addEventListener('change', this.checkIt.bind(this)); // вешаем на изменение проверку
         });
         this.form.addEventListener('submit', (e)=> { //вешаем запрет на отправку
             this.elementsForm.forEach( elem => this.checkIt({target: elem})); // нельзя отправлять пустое
@@ -28,6 +27,7 @@ class Validator {
     isValid(elem){
         const  validatorMethod = {
             notEmpty(elem){
+                console.log(elem);
                 if (elem.value.trim() === ''){ //если поля пустые, играем через error, так как false
                     return false;
                 }
@@ -41,8 +41,8 @@ class Validator {
             const method = this.method[elem.id]; // массив из методов, прописанных в html
             if (method){ //это добавляем на случай ошибок в html, если там просто ошиблись, то код не запускается, method undefined
                 return method.every(item => {
-                // console.log(this.pattern[item[1]]); //так получаем сам шаблон
-                //console.log(validatorMethod[item[0]](elem, this.pattern[item[1]])); // этот ноль очень важен!
+                console.log(this.pattern[item[1]]); //так получаем сам шаблон
+                console.log(validatorMethod[item[0]](elem, this.pattern[item[1]])); // этот ноль очень важен!
                     return validatorMethod[item[0]](elem, this.pattern[item[1]]);
              });
             } 
