@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }, 1000);   
     }
-    countTimer('21 April 2020 16:51');
+    countTimer('30 September 2020 16:51');
 
     //МЕНЮ
     const toggle = () => {
@@ -183,7 +183,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };  
     tabs();
     // Slider
-    const slider =()=> {
+    const slider = () => {
         const slider = document.querySelector('.portfolio-content'), //id="all-progects">
             slide = slider.querySelectorAll('.portfolio-item'),
             btn = slider.querySelectorAll('.portfolio-btn');
@@ -270,6 +270,251 @@ window.addEventListener('DOMContentLoaded', () => {
 			
     };
     slider();
+    // Наша команда, замена фоток (отрабатываем делегирование + dataset)
+    const showDataPhtot = () => {
+        const command = document.getElementById('command'),
+            images = command.querySelectorAll('img');
+            let basicPic;
+        
+            command.addEventListener('mouseover', (event)=> {
+                let target = event.target;
+                target = target.closest('.command__photo');
+                if (target){
+                    basicPic = target.currentSrc;
+                        target.addEventListener('mouseenter', (event)=> {
+                            target.src = target.dataset.img;
+                            console.dir(target);
+                        });
+                        target.addEventListener('mouseout', (event)=> {
+                            target.src = basicPic;
+                            console.dir(target);
+                        });
+                        
+                    }
+                    
+            });
+    };
+    showDataPhtot();
+    // Калькулятор (отрабатываем регулярки, на ограничение ввода)
+    const checkData = () => {
+        const calcBlock = document.querySelector('.calc-block');
+        calcBlock.addEventListener('input', (event) =>{
+            let target = event.target;
+            target = target.closest('.calc-item');
+            if (!target.classList.contains('calc-type')){
+                if (target.value.match(/\d/g) === null || target.value.match(/[^\d]/g)){
+                    target.value = '';
+                }
+            }
+        });
+
+    };
+    checkData();
+    const calc = (price = 100) => {
+        const calcBlock = document.querySelector('.calc-block'),
+            calcType = calcBlock.querySelector('.calc-type'),
+            calcSquare = calcBlock.querySelector('.calc-square'),
+            calcCount = calcBlock.querySelector('.calc-count'),
+            calcDay = calcBlock.querySelector('.calc-day'),
+            totalValue = document.getElementById('total');
+        
+            const countSum = () => {
+                let total = 0,
+                countValue = 1,
+                dayValue = 1;
+                const typeValue = calcType.options[calcType.selectedIndex].value,
+                    squareValue = +calcSquare.value;
+
+                if (calcCount.value > 1){
+                    countValue += (calcCount.value - 1) / 10;
+                }
+                if (calcDay.value !== '' && calcDay.value <= 5){
+                    dayValue += 1;  
+                } else if (calcDay.value !== '' && calcDay.value < 10) {dayValue += 0.5;} 
+    
+                if (typeValue && squareValue){
+                    total = price * typeValue * squareValue * countValue * dayValue;
+                } 
+                
+                totalValue.textContent = Math.ceil(total);
+                
+            };
+             calcBlock.addEventListener('change', (event) => {
+                let target = event.target;
+                target = target.closest('.calc-item');
+                // if (calcType.value !== '' && calcSquare.value !== ''){
+                // if (target === calcType || target === calcSquare){
+                // countSum ();
+                // }
+                if (target){countSum ();}
+            });
+    };
+    calc(100);
+    // Анимация калькулятора
+    const increasTotal = () => {
+        const calcBlock = document.querySelector('.calc-block'),
+            totalValue = document.getElementById('total');
+        let target, 
+            step = 0;
+        
+        const showRes = () => {
+            target = totalValue.textContent;
+            totalValue.innerText = 0;
+            const increase = () => {
+                totalValue.innerHTML = 0;
+                if (step < target){
+                    step += 1; 
+                } else if (step > target){
+                    step -= step;
+                }
+                totalValue.innerHTML = step;
+            };
+            setInterval (increase, 0.001);
+        };
+        calcBlock.addEventListener('change', showRes);
+
+    };
+    increasTotal();
+    // Отправка AJAX-FORM
+    const sendForm = () => {
+        const errorMessage = 'Что-то пошло не так...',
+            loadMessage = 'Загрузка...',
+            successsMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
+            
+        const form = document.getElementById('form1'),
+            formEnd = document.getElementById('form2'),
+            formPopUp = document.getElementById('form3'),
+            statusMessage = document.createElement('div');
+            statusMessage.style.cssText = 'font-size: 2rem';
+        // СЛУШАТЕЛИ НА ФОРМУ    
+        form.addEventListener('change', (event)=> {
+            validate(form);
+        });
+        formEnd.addEventListener('change', (event)=> {
+            validate(formEnd);
+        });
+        formPopUp.addEventListener('change', (event)=> {
+            validate(formPopUp);
+        });
+
+        form.addEventListener('submit', (event)=> {
+            event.preventDefault();
+            form.appendChild(statusMessage);
+            //statusMessage.textContent = loadMessage; //в этом месте можно добавить spiner, иконку загрузки!
+            form.insertAdjacentHTML('beforeend', preloader());
+            const spinner = form.querySelector('.lds-roller');
+            const formData = new FormData(form);
+            const body = {};
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            postData(body, () => {
+                statusMessage.textContent = successsMessage;
+                spinner.classList.remove('lds-roller');
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            }); 
+            const inputs = [form.querySelectorAll('input')];
+            inputs[0].forEach((elem) => {
+                elem.value = '';
+            });
+            
+        });
+        
+        formEnd.addEventListener('submit', (event)=> {
+            event.preventDefault();
+            formEnd.appendChild(statusMessage);
+            formEnd.insertAdjacentHTML('beforeend', preloader());
+            const spinner = formEnd.querySelector('.lds-roller');
+            const formData = new FormData(formEnd);
+            const body = {};
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            postData(body, () => {
+                statusMessage.textContent = successsMessage;
+                spinner.classList.remove('lds-roller');
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            }); 
+            const inputs = [formEnd.querySelectorAll('input')];
+            inputs[0].forEach((elem) => {
+                elem.value = '';
+            });
+        });
+        formPopUp.addEventListener('submit', (event)=> {
+            event.preventDefault();
+            formPopUp.appendChild(statusMessage);
+            formPopUp.insertAdjacentHTML('beforeend', preloader());
+            const spinner = formPopUp.querySelector('.lds-roller'); 
+            const formData = new FormData(formPopUp);
+            const body = {};
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            postData(body, () => {
+                statusMessage.textContent = successsMessage;
+                spinner.classList.remove('lds-roller');
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            }); 
+            const inputs = [formPopUp.querySelectorAll('input')];
+            inputs[0].forEach((elem) => {
+                elem.value = '';
+            });
+        });
+        // Отправка на сервер
+        const postData = (body, outputData, errorData) => {
+            const request = new XMLHttpRequest();
+            request.addEventListener('readystatechange', ()=>{
+                if (request.readyState !== 4){
+                    return;
+                } 
+                if (request.status === 200){
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
+            });
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(body));
+        }
+        // ВАЛИДАЦИЯ ИНПУТОВ
+        const validate = (block) => {
+            const fullForm = new Set(block.elements),
+                chechedForm = [];
+            fullForm.forEach((elem) => {
+                chechedForm.push(elem);
+            });
+            const inputs = chechedForm.filter(elem => elem.tagName === 'INPUT');
+            inputs.forEach((input) => {
+                if (input.name === 'user_name'){
+                    if (/[а-я]/gi.test(input.value)){
+                       return;
+                    } else {input.value = '';}
+                }
+                if (input.name === 'user_email'){
+                    if (/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/gi.test(input.value)){
+                       return;
+                    } else {input.value = '';}
+                }
+                if (input.name === 'user_phone'){
+                    if(/\+?[\d\s\-\(\)]{10,}/g.test(input.value)){
+                        return;
+                    }  else {input.value = '';}
+                }
+            });
+        }
+        //SPINNER
+        const preloader = () => {
+            return `<div id="loader" class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`;
+        }   
+    };
+    sendForm();
 });
 
 
